@@ -42,6 +42,41 @@ void descending(struct node *root) {
     }
 }
 
+void search(struct node **root, int number) {
+    if ((*root) != NULL) {
+        if (number > (*root)->data) {
+            search(&(*root)->kanan, number);
+        } else if (number < (*root)->data) {
+            search(&(*root)->kiri, number);
+        } else if (number == (*root)->data) {
+            printf("data yang dicari adalah %d \n", (*root)->data);
+        }
+    } else {
+        printf("data yang dicari tidak ada\n");
+    }
+}
+
+void sortDegree(struct node *root) {
+    if (root != NULL) {
+        printf("%d, ", root->data);
+        sortDegree(root->kiri);
+        sortDegree(root->kanan);
+    }
+}
+
+void degree(struct node **root, int num) {
+    if ((*root) != NULL) {
+        if (num > (*root)->data) {
+            degree(&(*root)->kanan, num);
+        } else if (num < (*root)->data) {
+            degree(&(*root)->kiri, num);
+        } else if (num == (*root)->data) {
+            printf("degree dari %d adalah ", num);
+            sortDegree((*root));
+        }
+    }
+}
+
 void main() {
     struct node *root;
     root = NULL;
@@ -55,6 +90,9 @@ void main() {
     printf("pengurutan ascending(dari terkecil-terbesar): ");
     ascending(root);
     printf("\n");
-    printf("pengurutan ascending(dari terbesar-terkecil): ");
+    printf("pengurutan descending(dari terbesar-terkecil): ");
     descending(root);
+    printf("\n");
+    search(&root, 7);
+    degree(&root, 15);
 }
